@@ -2,7 +2,7 @@ name: Daily Fear and Greed Index
 
 on:
   schedule:
-    - cron: '0 * * * 1,2,3,4,5'
+    - cron: '0 9 * * 1,2,3,4,5'
   workflow_dispatch:
 
 jobs:
