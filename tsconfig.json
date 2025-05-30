@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    /* 필수 출력 설정 */
+    "target": "ES2020", // async/await 잘 지원됨
+    "module": "commonjs", // Node.js 기본 모듈 시스템
+    "outDir": "./dist", // 컴파일된 JS 파일 출력 폴더
+    "rootDir": "./src", // 소스코드 폴더
+
+    /* 편의 설정 */
+    "esModuleInterop": true, // commonjs 모듈 호환 import
+    "resolveJsonModule": true, // .json 파일 import 허용
+    "forceConsistentCasingInFileNames": true, // import 경로 대소문자 엄격하게
+
+    /* 타입 안정성 강화 */
+    "strict": true, // 모든 엄격 모드 활성화
+    "skipLibCheck": true, // node_modules 타입 검사 생략 (속도 개선)
+    "noImplicitAny": true, // any 추론 방지
+    "noUnusedLocals": true, // 사용하지 않는 지역 변수 에러
+    "noUnusedParameters": true, // 사용하지 않는 매개변수 에러
+
+    /* JS interop 관련 */
+    "allowJs": true, // JS 파일도 허용 (점진적 이전 시)
+    "checkJs": false, // JS 타입 검사 비활성화
+
+    /* 기타 */
+    "moduleResolution": "node", // 모듈 해석 방식: node 스타일
+    "isolatedModules": true, // 각 파일 독립적으로 트랜스파일 가능
+    "noEmitOnError": true // 에러 시 JS 파일 생성 안함
+
+    /* decorator 쓰면 추가 필요 (선택) */
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
