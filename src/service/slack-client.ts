@@ -17,6 +17,10 @@ export class SlackClient {
         ? "돈이나 모아라ㅠ"
         : "이제 살때가 되었다!";
     const blocks = this.getBlocks(fearAndGreedStatics, opinion);
+
+    // 디버깅용: 생성된 블록 구조를 콘솔에 출력
+    console.log(JSON.stringify(blocks, null, 2));
+
     const response = await this.client.chat.postMessage({
       channel,
       blocks,
@@ -67,7 +71,7 @@ export class SlackClient {
           },
           {
             type: "mrkdwn",
-            text: `*기준 시각:*\n${fearAndGreedStatics.createdAt}}`,
+            text: `*기준 시각:*\n${fearAndGreedStatics.createdAt}`,
           },
         ],
       },
