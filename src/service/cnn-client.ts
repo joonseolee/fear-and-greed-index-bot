@@ -30,13 +30,13 @@ export class CNNClient {
 
     const data = (await response.json()) as FearAndGreedStaticsResponse;
     return {
-      score: data.fear_and_greed.score,
+      score: Math.floor(data.fear_and_greed.score),
       rating: data.fear_and_greed.rating,
       createdAt: data.fear_and_greed.timestamp,
-      previousOneDayScore: data.fear_and_greed.previous_close,
-      previousOneWeekScore: data.fear_and_greed.previous_1_week,
-      previousOneMonthScore: data.fear_and_greed.previous_1_month,
-      previousOneYearScore: data.fear_and_greed.previous_1_year,
+      previousOneDayScore: Math.floor(data.fear_and_greed.previous_close),
+      previousOneWeekScore: Math.floor(data.fear_and_greed.previous_1_week),
+      previousOneMonthScore: Math.floor(data.fear_and_greed.previous_1_month),
+      previousOneYearScore: Math.floor(data.fear_and_greed.previous_1_year),
     };
   }
 }

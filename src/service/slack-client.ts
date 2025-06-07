@@ -37,6 +37,14 @@ export class SlackClient {
     fearAndGreedStatics: FearAndGreedStatics,
     opinion: string
   ): (KnownBlock | Block)[] {
+    // 오늘날 기준 몇 포인트 떨어졌고 올랐는지 확인
+    const todayChange =
+      fearAndGreedStatics.score - fearAndGreedStatics.previousOneDayScore;
+    const todayChangeText =
+      todayChange > 0
+        ? `${fearAndGreedStatics.score} (+${todayChange})`
+        : `${fearAndGreedStatics.score} (-${Math.abs(todayChange)})`;
+
     return [
       {
         type: "header",
@@ -51,7 +59,9 @@ export class SlackClient {
         fields: [
           {
             type: "mrkdwn",
-            text: `*현재 점수:*\n${fearAndGreedStatics.score}`,
+            text: `*현재 점수:*\n${this.applyEmoji(
+              fearAndGreedStatics.score
+            )} ${todayChangeText}`,
           },
           {
             type: "mrkdwn",
@@ -59,15 +69,21 @@ export class SlackClient {
           },
           {
             type: "mrkdwn",
-            text: `*어제:*\n${fearAndGreedStatics.previousOneDayScore}`,
+            text: `*어제:*\n${this.applyEmoji(
+              fearAndGreedStatics.previousOneDayScore
+            )} ${fearAndGreedStatics.previousOneDayScore}`,
           },
           {
             type: "mrkdwn",
-            text: `*일주일 전:*\n${fearAndGreedStatics.previousOneWeekScore}`,
+            text: `*일주일 전:*\n${this.applyEmoji(
+              fearAndGreedStatics.previousOneWeekScore
+            )} ${fearAndGreedStatics.previousOneWeekScore}`,
           },
           {
             type: "mrkdwn",
-            text: `*한 달 전:*\n${fearAndGreedStatics.previousOneMonthScore}`,
+            text: `*한 달 전:*\n${this.applyEmoji(
+              fearAndGreedStatics.previousOneMonthScore
+            )} ${fearAndGreedStatics.previousOneMonthScore}`,
           },
           {
             type: "mrkdwn",
@@ -89,7 +105,7 @@ export class SlackClient {
         elements: [
           {
             type: "mrkdwn",
-            text: "*탐욕지수 범위:* `0-25`: 매우 공포 | `25-50`: 공포 | `50-75`: 탐욕 | `75-100`: 매우 탐욕",
+            text: "*탐욕지수 범위:*\n`0-25`: 😱 매우 공포\n`25-45`: 😰 공포\n`45-55`: 😐 중립\n`55-75`: 🤑 탐욕\n`75-100`: 🔥 매우 탐욕",
           },
         ],
       },
@@ -108,5 +124,19 @@ export class SlackClient {
         ],
       },
     ];
+  }
+
+  private applyEmoji(score: number): string {
+    if (score >= 75) {
+      return "🔥";
+    } else if (score >= 55) {
+      return "🤑";
+    } else if (score >= 45) {
+      return "😐";
+    } else if (score >= 25) {
+      return "😰";
+    } else {
+      return "😱";
+    }
   }
 }
